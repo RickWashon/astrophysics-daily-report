@@ -4,6 +4,11 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Obsidian device-local configuration
+# Keep the Markdown vault canonical in GitHub while allowing each device
+# to maintain its own plugins, workspace, hotkeys, appearance, and cache.
+.obsidian/
+
 # Python
 __pycache__/
 *.py[cod]
