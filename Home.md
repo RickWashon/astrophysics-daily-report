@@ -6,7 +6,7 @@
 
 - [[daily]] — 每日天文学与宇宙学简报
 - [[3day]] — 三日天文文献快报（预留）
-- [[weekly]] — 每周天文重磅精选（预留）
+- [[weekly]] — 每周天文重磅精选
 - [[README]] — 自动化架构、测试与故障排查
 
 ## Recommended Obsidian use
@@ -21,8 +21,9 @@
 ```text
 daily/YYYY-MM/YYYY-MM-DD.md
 3day/
-weekly/
+weekly/YYYY-MM/YYYY-MM-DD_to_YYYY-MM-DD.md
+weekly/YYYY-MM/YYYY-MM-DD_to_YYYY-MM-DD.bib
 bib/
 ```
 
-正式日报由 ChatGPT Scheduled Task 写入 GitHub；本地 Obsidian 一般通过 Git pull 获取更新。
+正式日报与周报由 ChatGPT Scheduled Task 写入 GitHub；周报仅归档到 `weekly/`，不触发飞书推送。本地 Obsidian 一般通过 Git pull 获取更新。
