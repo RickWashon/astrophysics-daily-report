@@ -6,6 +6,9 @@ Usage:
 
 Required environment variable:
     FEISHU_WEBHOOK
+
+Optional environment variable:
+    REPORT_URL
 """
 
 from __future__ import annotations
@@ -110,12 +113,13 @@ def count_selected_papers(body: str) -> int:
 
 
 def build_file_url(markdown_path: str) -> str:
+    explicit = os.environ.get("REPORT_URL", "").strip()
+    if explicit:
+        return explicit
+
     server = os.environ.get("GITHUB_SERVER_URL", "https://github.com").rstrip("/")
     repo = os.environ.get("GITHUB_REPOSITORY", "").strip()
-    sha = os.environ.get("GITHUB_SHA", "").strip()
     normalized = markdown_path.replace(os.sep, "/").lstrip("./")
-    if repo and sha:
-        return f"{server}/{repo}/blob/{sha}/{normalized}"
     if repo:
         return f"{server}/{repo}/blob/main/{normalized}"
     return ""
