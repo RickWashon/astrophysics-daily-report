@@ -76,7 +76,9 @@ jobs:
             exit 0
           fi
 
+          RELATIVE="${MATCH#daily/}"
           echo "file=${MATCH}" >> "${GITHUB_OUTPUT}"
+          echo "relative_file=${RELATIVE}" >> "${GITHUB_OUTPUT}"
           echo "should_send=true" >> "${GITHUB_OUTPUT}"
 
       - name: Verify Feishu webhook secret
@@ -95,4 +97,5 @@ jobs:
         if: steps.select.outputs.should_send == 'true'
         env:
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          REPORT_URL: https://github.com/RickWashon/astrophysics-daily-report/blob/main/daily/${{ steps.select.outputs.relative_file }}
         run: python scripts/send_feishu.py '${{ steps.select.outputs.file }}'
