@@ -21,7 +21,7 @@ ChatGPT Scheduled Task (08:00 Asia/Shanghai)
 ```text
 daily/               # 每日简报，按自然月归档
 3day/                # 预留：三日天文文献快报
-weekly/              # 预留：每周天文重磅精选
+weekly/              # 每周天文重磅精选，按覆盖周的周一所属自然月归档
 bib/                 # 预留：BibTeX
 scripts/send_feishu.py
 .github/workflows/daily-feishu.yml
@@ -33,7 +33,14 @@ scripts/send_feishu.py
 daily/YYYY-MM/YYYY-MM-DD.md
 ```
 
-日期和“今天”的判定均使用 `Asia/Shanghai`。
+周报文件严格使用：
+
+```text
+weekly/YYYY-MM/YYYY-MM-DD_to_YYYY-MM-DD.md
+weekly/YYYY-MM/YYYY-MM-DD_to_YYYY-MM-DD.bib
+```
+
+其中 `weekly/YYYY-MM/` 取该覆盖周**周一**所属的自然月；跨月周不按执行日期改目录。日期和“今天”的判定均使用 `Asia/Shanghai`。
 
 ## Scheduled Task → GitHub
 
@@ -64,6 +71,7 @@ daily/YYYY-MM/YYYY-MM-DD.md
 
 因此：
 
+- `weekly/**/*.md` 和 `weekly/**/*.bib` 不在 workflow 的监听路径内，**周报不会推送到飞书**。
 - 当天日报首次创建：发送一次。
 - 同日文件后续修改（`M`）：不发送。
 - 补录旧日期日报：不发送。
@@ -140,4 +148,4 @@ language: zh-CN
 
 ## 后续扩展
 
-第一阶段稳定后，再把三日快报和周报分别接入 `3day/` 与 `weekly/`，并使用独立 workflow，避免不同频率互相干扰。
+三日快报后续可接入 `3day/`。周报已经接入 `weekly/`，仅作为 GitHub/Obsidian 长期归档，不配置飞书推送 workflow。
