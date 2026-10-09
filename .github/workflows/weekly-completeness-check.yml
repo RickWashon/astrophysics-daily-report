@@ -1,0 +1,28 @@
+name: Weekly astronomy archive completeness check
+
+on:
+  schedule:
+    # GitHub Actions cron is UTC.
+    # 13:00 UTC Saturday = 21:00 Saturday in Asia/Shanghai.
+    - cron: '0 13 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-archive:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Check daily and weekly archive completeness
+        env:
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+        run: python scripts/check_report_completeness.py
